@@ -3,7 +3,7 @@
 
 
 
-# PROPOSED SOLUTION 
+ PROPOSED SOLUTION 
  
  To address the challenge of real-time multilingual communication, the microservices-based architecture is proposed:
  
