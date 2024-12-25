@@ -25,3 +25,7 @@
 This architecture ensures that real-time chat translation is accurate, efficient, and user-centric while remaining flexible for future enhancements.
 
 
+![image](https://github.com/user-attachments/assets/48aaed7e-3e52-4cc5-bd78-b1a41f70793e)
+
+
+
