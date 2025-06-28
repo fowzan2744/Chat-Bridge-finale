@@ -56,7 +56,7 @@ To achieve smooth, scalable, and reliable multilingual chat, the application use
 | Backend          | Node.js, Express           |
 | Database         | MongoDB                    |
 | Authentication   | Auth0                      |
-| Translation API  | mymemory tranlation API    |
+| Translation API  | myMemory translation API   |
 | Payment Gateway  | Stripe                     |
 | Deployment       | Docker                     |
 -------------------------------------------------
