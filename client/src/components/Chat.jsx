@@ -54,6 +54,7 @@ function Chat({ specificUser, user }) {
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
+    console.log(messagesEndRef);
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }

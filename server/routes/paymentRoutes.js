@@ -1,43 +1,39 @@
-const express = require("express");
+const Stripe = require('stripe');
+const express = require('express');
+const User = require('../models/user');
 const router = express.Router();
-const {instance,validateSignature} = require("../config/razorpay");
-const User = require("../models/user");
 
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+router.post('/save-payment', async (req, res) => {
+  const { sessionId, email } = req.body;
 
-router.post("/", async (req, res) => {
-    const { totalAmount } = req.body;
+  console.log('Received save-payment:', req.body);
 
-    console.log(totalAmount);
+  if (!sessionId) return res.status(400).json({ error: 'Missing sessionId' });
+  if (!email) return res.status(400).json({ error: 'Missing email' });
 
-    const options = {
-        amount: totalAmount * 100,
-        currency: "INR",
-        receipt: `reciept_${Math.floor(Math.random() * 10000000)}`,
-    };
+  try {
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
 
-    const order = await instance.orders.create(options);
-
-    if (!order) return res.status(500).send("Some error occured");
-
-    res.status(200).json(order);
-})
-
-router.post("/success", async (req, res) => {
-    const {userId, orderCreationId, razorpayPaymentId, razorpayOrderId, razorpaySignature } = req.body;
-
-    console.log(req.body);
-    if (!validateSignature(razorpayPaymentId, orderCreationId, razorpaySignature)) {
-        return res.status(400).json({ msg: "Transaction not legit!" });
+    if (session.payment_status !== 'paid') {
+      return res.status(400).json({ error: 'Payment not completed' });
     }
 
-    
-    await User.findByIdAndUpdate(userId, {$set:{paymentId:razorpayPaymentId}});
+    const user = await User.findOneAndUpdate(
+      { emailId: email },
+      { $set: { paymentId: sessionId } },
+      { new: true }
+    );
 
-    res.status(200).json({
-        success: true, message: "Order Placed Successfully!",
-        orderId: razorpayOrderId,
-        paymentId: razorpayPaymentId
-    });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    return res.json({ success: true, message: 'Payment saved', user });
+  } catch (err) {
+    console.error('Error verifying payment:', err);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 

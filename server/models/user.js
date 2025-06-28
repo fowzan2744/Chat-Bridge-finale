@@ -15,7 +15,8 @@ const userSchema = new Schema({
         type: String
     },
     paymentId: {
-        type: String
+        type: String,
+        default: null
     },
     mainLang: {
         type: String,
@@ -40,6 +41,6 @@ const userSchema = new Schema({
 
 userSchema.index({ emailId: 1 });
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.models.User || mongoose.model("User", userSchema);
 
 module.exports = User;

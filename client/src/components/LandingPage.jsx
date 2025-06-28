@@ -2,14 +2,10 @@ import React from 'react';
 import { MessageSquare, Globe, Users, Zap } from 'lucide-react';
 import "../assets/styles/landingPage.css";
 
-const LandingPage = ({loginWithRedirect,setMakePay,status}) => {
+const LandingPage = ({loginWithRedirect,status}) => {
 
   const handleGetStarted = async () => {
-    if(status == 0){
       loginWithRedirect();
-    }else{
-      setMakePay(true);
-    }
   }
   return (
     <div className="landing-container">

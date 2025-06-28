@@ -13,28 +13,69 @@ router.get("/:emailId", async (req, res) => {
     res.json(users?.friends);
 })
 
+router.get("/info/:emailId", async (req, res) => {
+    const { emailId } = req.params;
+
+    const user = await User.findOne({ emailId });
+
+    if (!user) {
+        return res.status(404).json({ error: "User not found" });
+    }
+
+    res.json({
+        userId: user._id,
+        name: user.name,
+        email: user.emailId,
+        tier: user.tier || 'free',
+        mainLang: user.mainLang || 'en',
+        paymentId: user.paymentId || null
+    });
+});
+
 
 router.post("/signup", async (req, res) => {
-    const { name, email } = req.body;
-    const user = await User.findOne({ emailId: email });
-    // console.log(user, 'dfvsg', req.body);
-    if (user) {
-        res.json({ status: "success", message: "Login successfull", userDetails: { userId: user._id, mainLang: user.mainLang || "en", paymentId: user?.paymentId ? user.paymentId : false } });
-    } else {
-        const newUser = new User({ name, emailId: email });
-        await newUser.save();
-        res.json({ status: "success", message: "User Created Successfully!", userDetails: { userId: newUser._id, mainLang: "en",  paymentId: user?.paymentId ? user.paymentId : false  } });
-    }
-}
-)
+  const { name, email } = req.body;
 
-router.post("/language",async (req,res) => {
-    const {emailId,languageCode} = req.body;
+  try {
+    const existingUser = await User.findOne({ emailId: email });
+
+    if (existingUser) {
+      return res.json({
+        status: "success",
+        message: "Login successful",
+        userDetails: {
+          userId: existingUser._id,
+          mainLang: existingUser.mainLang || "en",
+          paymentId: existingUser.paymentId || false
+        }
+      });
+    }
+
+    const newUser = new User({ name, emailId: email });
+    await newUser.save();
+
+    return res.json({
+      status: "success",
+      message: "User created successfully!",
+      userDetails: {
+        userId: newUser._id,
+        mainLang: "en",
+        paymentId: false
+      }
+    });
+  } catch (error) {
+    console.error("❌ Signup error:", error);
+    res.status(500).json({ status: "error", message: "Internal server error" });
+  }
+});
+
+router.post("/language", async (req, res) => {
+    const { emailId, languageCode } = req.body;
     console.log(req.body);
 
-    await User.findOneAndUpdate({emailId},{mainLang:languageCode});
+    await User.findOneAndUpdate({ emailId }, { mainLang: languageCode });
 
-    res.json({success:true,message:"Updated"});
+    res.json({ success: true, message: "Updated" });
 })
 
 router.post("/request", async (req, res) => {
