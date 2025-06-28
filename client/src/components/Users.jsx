@@ -89,8 +89,8 @@ function Users({ user, setSpecificUser, specificUser }) {
   ) : (
     <div
       style={{
-        width: '40px',
-        height: '40px',
+        width: '50px',
+        height: '50px',
         backgroundColor: '#0070f3',
         color: 'white',
         borderRadius: '50%',
