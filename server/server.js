@@ -23,14 +23,15 @@ connectDb();
 app.use(bodyParser.json())
 
 app.use(cors({
-    origin: `${process.env.CLIENT_DOMAIN}`,
-    methods: ['GET', 'PUSH', 'POST', 'PATCH', 'DELETE', 'PUT'],
-    credentials: true
-}))
+  origin: process.env.CLIENT_DOMAIN,   
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+  credentials: true,
+}));
+
 
 const io = new Server(server, {
     cors: {
-        origin: `${process.env.CLIENT_DOMAIN}`,
+        origin: process.env.CLIENT_DOMAIN,   
         methods: ['GET', 'PUSH', 'POST', 'PATCH', 'DELETE', 'PUT'],
         credentials: true
     }
