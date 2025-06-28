@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PaymentPrompt = ({ user, logout }) => {
+const PaymentPrompt = ({ user }) => {
   const stripeLink = `https://buy.stripe.com/test_fZubJ3co391uelB66Q9R602?prefilled_email=${user.email}&client_reference_id=${user.email}`;
 
   return (
