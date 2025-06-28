@@ -79,7 +79,7 @@ function Users({ user, setSpecificUser, specificUser }) {
             className={`user-item ${specificUser?.friend?._id === userx.friend._id ? 'active' : ''}`}
             onClick={() => setSpecificUser(userx)}
           >
-            <div className="user-avatar">
+                 <div className="user-avatar">
   {userx.friend.picture ? (
     <img
       src={userx.friend.picture}
@@ -87,11 +87,26 @@ function Users({ user, setSpecificUser, specificUser }) {
       className="avatar-image"
     />
   ) : (
-    <div className="avatar-fallback">
+    <div
+      style={{
+        width: '40px',
+        height: '40px',
+        backgroundColor: '#0070f3',
+        color: 'white',
+        borderRadius: '50%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontWeight: 'bold',
+        fontSize: '1.2rem',
+        userSelect: 'none',
+      }}
+    >
       {userx.friend.name.charAt(0).toUpperCase()}
     </div>
   )}
 </div>
+
 
             <div className="user-info">
               <span className="user-name">{userx.friend.name}</span>
