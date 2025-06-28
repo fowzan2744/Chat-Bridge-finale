@@ -80,12 +80,19 @@ function Users({ user, setSpecificUser, specificUser }) {
             onClick={() => setSpecificUser(userx)}
           >
             <div className="user-avatar">
-              <img
-                src={userx.friend.picture || user.picture}
-                alt={userx.friend.name}
-                className="avatar-image"
-              />
-            </div>
+  {userx.friend.picture ? (
+    <img
+      src={userx.friend.picture}
+      alt={userx.friend.name}
+      className="avatar-image"
+    />
+  ) : (
+    <div className="avatar-fallback">
+      {userx.friend.name.charAt(0).toUpperCase()}
+    </div>
+  )}
+</div>
+
             <div className="user-info">
               <span className="user-name">{userx.friend.name}</span>
             </div>
