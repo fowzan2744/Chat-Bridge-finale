@@ -8,7 +8,7 @@ const server = createServer(app);
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const Stripe = require('stripe');
-const path = require('path');
+
 dotenv.config();
 const connectDb = require("./utillity/dbConfig");
 
@@ -28,13 +28,6 @@ app.use(cors({
   credentials: true,
 }));
 
-// Serve React static build files
-app.use(express.static(path.join(__dirname, 'client', 'dist')));
-
-// Handle all other routes by sending React's index.html
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
-});
 
 const io = new Server(server, {
     cors: {
