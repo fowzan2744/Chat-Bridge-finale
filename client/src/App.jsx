@@ -59,6 +59,8 @@ function App() {
             />
           }
         />
+        <Route path="/test-route" element={<div>Test Route Working!</div>} />
+
       </Routes>
     </>
   );
