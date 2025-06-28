@@ -26,19 +26,6 @@ const PaymentPrompt = ({ user, logout }) => {
 
       <br />
 
-      <button
-        onClick={() => logout({ returnTo: import.meta.env.VITE_APP_BASE_URL })}
-        style={{
-          padding: '8px 16px',
-          fontSize: '0.9rem',
-          backgroundColor: '#ccc',
-          border: 'none',
-          borderRadius: '5px',
-          cursor: 'pointer',
-        }}
-      >
-        Logout
-      </button>
     </div>
   );
 };
