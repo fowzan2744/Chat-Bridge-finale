@@ -1,4 +1,4 @@
-import React from 'react', { useState, useEffect } from 'react';;
+import React,{ useState, useEffect } from 'react';;
 
 const PaymentPrompt = ({ user }) => {
   const [loading, setLoading] = useState(true);
